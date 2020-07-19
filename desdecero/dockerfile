@@ -1,0 +1,27 @@
+FROM ubuntu:18.04
+
+RUN apt update && \
+    apt install -y curl
+    # || significa or && concatenar y correr si el primer comando funciono correctamente \ siguiente linea
+
+WORKDIR /app/
+
+#COPY source dest
+COPY myapp.sh ./
+
+# ADD myapp.sh /app/
+#ADD http://myurl.com.myarchivo.tar.gz /app/
+
+RUN chmod +x ./myapp.sh
+
+#manera basica para ejecutar mi app - ejecutable por  default
+#* notacion Arreglo recomendada
+#CMD ["bash","/app/myapp.sh"] 
+ENTRYPOINT ["./myapp.sh"] 
+
+#ENTRYPOINT ["bash] 
+
+# CMD ["/app/myapp.sh"]
+CMD []
+# ! esta notacion stream no se la recomienda, tiene que ver con linux signals
+#CMD "bash /app/myapp.sh"
