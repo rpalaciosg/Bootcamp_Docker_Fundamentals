@@ -44,9 +44,19 @@ De un docker image puedo generar un contenedor de la misma imagen.
 Cuando uno corre en wndows existe algo que se llama windows container pero hoy se vera linux containers. windows containers es una implementacion aparte.
 Una iamgen seria una clase y un objeto seria un caontainer.
 
+1. Siempre el mismo entorno, por que todas las dependencias estas metidas ahi mismos
+2. Snadbox, evitar conflictos entre versiones con otra aplicacion que tenemos en la misma maquita. Ej. contenedor con node 10 y otro contenedor con node 12
+3. Facil de mover: siempre funciona. Es bueno paa entornos de desarrollo, uso para mi aplicacion pasarla a un servidor corra mi app y asegurarnos de que siempre corra y funciona perfectamente y no tener el problema de que funcionaba en mi maquina y en tu maquina no. Nos aseguramos que todas las dependencias esten dentro del contenedor.
+
+
 ### Containers vs  VMS
 Docker la hicieron explotando una tecnologia que se llama linux containers. 
 Con MV tengo recursos despediciados.
+
+Las capas son la Infraestructura, Hypervisor, y las maquinas virtuales.
+Dentro de cada maquina virtual tiene el sistema operativo, los cuales tienen muchas cosas dentro y son muy pesadas, ademas de que usan mucha ram, disco, ect. 
+
+En docker  solo tenemos la infraestrtuctura, el Host Operating system y Docker, y de ahi muchos contenderes o aplicaciones. Todas las aplicaciones estan compartiendo el kernel.
 
 ### Vocabulario de Dockerfile
 - Docker Image: representa su aplicaion y dependencias.
@@ -67,6 +77,26 @@ Con MV tengo recursos despediciados.
 - Aislamiento
 - Run anywhere, puedo crear una iagen una vez y correrlo en cualquier lugar. Crear cloud native, cloud factor apps (aplicaciones de proxima generacion o faciles de migrar a cloud)
 
+### Docker
+
+Docker lo que hace es correr una imagen, esa imagen es una copia de nuestra aplicacion junto con los archivos de la distribucion de linux. 
+Osea que en la imagen voy a tener el sistema operativo (ej, Ububtu), elsoftware que necesita mi aplicacion para correr (ej. Node.js,Ngnx) y aparte mi aplicacion osea el codigo que voy a correr.
+
+Ddocker correr una imagen, esa imagen yo la puedo crear basandome en un `dockerfile` que basicamente es una lista de tareas para crear una imagen.
+
+```dockerfile
+# Dockerfile
+
+FROM ubuntu
+
+RUN apt-get install apache2
+
+CMD ["apache2"]
+```
+
+Si yo a ese `dockerfile` lo construyo o le hago un build se convierte en una imagen y despues yo uso esa imamgen para correr o hacer un `docker run` a mi contenedor.
+
+Imagen es como una clase y el contenedor es como un objeto, es decir puedo instanaciar varios objetos en docker a partir de una imagen puedo crear varios contenedores.
 
 ### Hasta donde ha llegado Docker?
 Los grander bancos como el Bank of America, JP Morgan usan docker, chick-fil-A, todo lo que usan cajas, ventas, usan docker y asi mismo cada uno de sus restaurantes. La NASA usa docker en sus spaceships/transbordadores en algunos modulos. SpaceX o tesla usa docker,  US Air Force, VISA, PAYPAL usan docker.
@@ -76,15 +106,21 @@ En seguridad los usan para crear iamgenes libre de virus.
 ### Instalacion - Docker Desktop for Windows
 - Buscar docker for windows.
 
-### docker contauner Run
+#### Instalar docker en Linux
+
+- Agregar usuario al grupo de docker para no tener que estar pasandonos a root para usarlo.
+
+`sudo usermod -a -G docker richard` o `sudo usermod -aG docker $USER`, luego debemos correr `newgrp docker` para activar los cambios al grupo docker. Ahora podemos usar docker desde nuestro usuario normal quie no sea root.
+
+### docker container Run
 Para correr nuestro primer contenedor en nuestro terminal
   `docker container run -it  --name minginx --publish 9090:80 --rm ngnx`
 Que puedo hacer para acceder a nuestro contenedor:
 `curl localhost:9090`
 
-docker funciona con un CLI, con docker puedo conectarme a un servidor remoto de docker y coorer comandos
+docker funciona con un CLI, con docker puedo conectarme a un servidor remoto de docker y correr comandos
 
--it : levantarlo en modo interactivo y correrlo en un terminal 
+-it : levantarlo en modo interactivo y correrlo en un terminal
 --name: para darle nombre a mi contenedor, con la aplicacion de coker puedo ver 
 --publish: significa publicame un puerto, esto se conoce como PORT_FORWARD hacer un port_forward el puerto 9090 del puerto 80, el numero de la izquierda es el numero de mi maquina y el numero a la derecha es el puerto del contendeor.
 --rm: remove after stop cuando yo lo detenga
