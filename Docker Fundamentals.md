@@ -1,14 +1,15 @@
 # Docker Bootcamp Fundamentals
 
 Marcos Cano - Lider de la comunidad de Docker guatemala.
-Docker Guatemal o meetup.com/dockerguatemala o kubernetesguatemala
+Docker Guatemala o meetup.com/dockerguatemala o kubernetesguatemala
 
 - Se recibira diploma y un digital badge
 
 ## Porque aprender Docker?
-- Segun la enceunta de stack overflow docker y contenirizacion es el 3er mas popular.
+
+- Según la encuesta de stack overflow docker y contenerizacion es el 3er mas popular.
 - Esta entre las 2da plataforma mas amada.
-- Esta en la 1ra plataforma mas buscada entre desarrolladores y buscqueda de talento. 
+- Esta en la 1ra plataforma mas buscada entre desarrolladores y búsqueda de talento. 
 - (No se puede saber kubernetes sin saber docker)
 - Si nos gusta Azure, nos presenta un Azure container serices o instances. Si queremos utilizar algo como ACI o AKS debemos saber docker.
 - Docker es el pilar de Kubernetes (AKS, EKS, GKE)
@@ -17,32 +18,34 @@ Docker Guatemal o meetup.com/dockerguatemala o kubernetesguatemala
 - Hay que saber docker antes de saber kubernetes.
 
 ### Que es Docker?
-- **Developer:** use Docker to elimante "works on my machine" problems when collaborating on code with co-workers. No es un silver bullet o solucion definitiva, doccker no va a eliminar mi memory leak.
-- **Operators:** use Docker para corre aplicaciones alado de otra side-by-side en cojunto o correrlas juntas en la misma infraestructura para aprovechar mis recursos.
+
+- **Developer:** use Docker to eliminate "works on my machine" problems when collaborating on code with co-workers. No es un silver bullet o solución definitiva, docker no va a eliminar mi memory leak.
+- **Operators:** use Docker para corre aplicaciones alado de otra side-by-side en conjunto o correrlas juntas en la misma infraestructura para aprovechar mis recursos.
 - **Enterprises:** use Docker to build agile software delivery pipelines to ship new features, more securely and with confidence for both Linux and Server apps. Entregar software de manera mas segura, rápida. 
-Como venderlo al jefe en el aspecto economico: Cuando se usa conjuntamente con un orquestador como Kubernetes o docker swarn. Elimina configuraciones diferentes. Cuanto te gasta hacer un release, que te equivocas o te da miedo, se tardan dias, semanas, meses, porque cuando se lanza a produccion tarda horas en darse cuenta, todo el tiempo que usas arreglando errores, todos los errores en tiempo de recuperacion se pueden traducir a numeros.
+Como venderlo al jefe en el aspecto económico: Cuando se usa conjuntamente con un orquestador como Kubernetes o docker swarn. Elimina configuraciones diferentes. Cuanto te gasta hacer un release, que te equivocas o te da miedo, se tardan dias, semanas, meses, porque cuando se lanza a producción tarda horas en darse cuenta, todo el tiempo que usas arreglando errores, todos los errores en tiempo de recuperación se pueden traducir a números.
 
-#### Que es Docker? que hara por mi?
-Docker comparte el kernel del sistema operativo host. Sobre los contendores puedo tener configuraciones homogenias.
-Alpine es una distribucion muy famosa por el tamanio de 5 o 7 megas. Varios contenedores viven en una misma computadora no importa que sistema base usa cada contenedor.
+#### Que es Docker? que hará por mi?
 
-Docker me permite tener esos ambientes heterogeneos.
-Una de las ventajas de docker es que corren un solo proceso. Se debe tener consideraciones a tener enc uenta para que sea seguro, puedo aplicar politicas de seguridad de SELinux. Puedo decirle que use cierta cantidad de memoria RAM.
+Docker comparte el kernel del sistema operativo host. Sobre los contenedores puedo tener configuraciones homogéneas.
+Alpine es una distribución muy famosa por el tamaño de 5 o 7 megas. Varios contenedores viven en una misma computadora no importa que sistema base usa cada contenedor.
+
+Docker me permite tener esos ambientes heterogéneos.
+Una de las ventajas de docker es que corren un solo proceso. Se debe tener consideraciones a tener en cuenta para que sea seguro, puedo aplicar políticas de seguridad de SELinux. Puedo decirle que use cierta cantidad de memoria RAM.
 Docker tienen un load balancer.
 
-docker se usa para apps stateless. Y si puede tener persistencia local.
-PErmite separar o encapsular las dependencias de mi aplicacion.
+Docker se usa para apps stateless. Y si puede tener persistencia local.
+Permite separar o encapsular las dependencias de mi aplicación.
 Con docker puedo tener un ejecutable, y yo puedo instanciarlo y correrlo 9 veces.
 Con algo como un orquestador, ya sea kubernetes, swarn o docker compose.
-No se recomienda tener todas las cosas en un miismo contendedor, mejor seria tener nginx y mi codigo frontenden un contenedor y otro contenedor con el backend en Node.js ya que se puede hacer comunicacion entre contendedores.
+No se recomienda tener todas las cosas en un miismo contendedor, mejor seria tener nginx y mi codigo frontenden un contenedor y otro contenedor con el backend en Node.js ya que se puede hacer comunicación entre contendedores.
 
 Supongamos que mi app es una app de python y ubuntu, docker me permite empaquetar todo ubuntu y python y puedo generar un paquete que se llama `Docker Image`, el docker image es como un ejecutable o un binario.
 
 Puedo versiona mis contendedores? -> Richard, si, creas tags, podes usar docker hub tiene una capa gratuita
 
 De un docker image puedo generar un contenedor de la misma imagen.
-Cuando uno corre en wndows existe algo que se llama windows container pero hoy se vera linux containers. windows containers es una implementacion aparte.
-Una iamgen seria una clase y un objeto seria un caontainer.
+Cuando uno corre en windows existe algo que se llama windows container pero hoy se vera linux containers. windows containers es una implementacion aparte.
+Una imagen seria una clase y un objeto seria un container.
 
 1. Siempre el mismo entorno, por que todas las dependencias estas metidas ahi mismos
 2. Snadbox, evitar conflictos entre versiones con otra aplicacion que tenemos en la misma maquita. Ej. contenedor con node 10 y otro contenedor con node 12
@@ -50,13 +53,13 @@ Una iamgen seria una clase y un objeto seria un caontainer.
 
 
 ### Containers vs  VMS
-Docker la hicieron explotando una tecnologia que se llama linux containers. 
-Con MV tengo recursos despediciados.
+Docker la hicieron explotando una tecnología que se llama linux containers. 
+Con MV tengo recursos desperdiciados.
 
 Las capas son la Infraestructura, Hypervisor, y las maquinas virtuales.
-Dentro de cada maquina virtual tiene el sistema operativo, los cuales tienen muchas cosas dentro y son muy pesadas, ademas de que usan mucha ram, disco, ect. 
+Dentro de cada maquina virtual tiene el sistema operativo, los cuales tienen muchas cosas dentro y son muy pesadas, ademas de que usan mucha ram, disco, ect.
 
-En docker  solo tenemos la infraestrtuctura, el Host Operating system y Docker, y de ahi muchos contenderes o aplicaciones. Todas las aplicaciones estan compartiendo el kernel.
+En docker  solo tenemos la infraestructura, el Host Operating system y Docker, y de ahi muchos contenedores o aplicaciones. Todas las aplicaciones están compartiendo el kernel.
 
 ### Vocabulario de Dockerfile
 - Docker Image: representa su aplicaion y dependencias.
@@ -64,7 +67,7 @@ En docker  solo tenemos la infraestrtuctura, el Host Operating system y Docker, 
 - Docker Engine: es lo que corre en mi maquina.
 - Registry Service (Docker hub or Docker trusted Registry)
 
-### Que bbeneficios me dara?
+### Que beneficios me dara?
 - docker agrega velocidad
   - Desarrollar mas rapido, permite la inicializacion y agregar neuvas personas al equipo.
   - Compilar mas rapido.
